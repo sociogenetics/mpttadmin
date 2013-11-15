@@ -1,0 +1,4 @@
+include README.md
+
+recursive-include mpttadmin/static *
+recursive-include mpttadmin/templates *
