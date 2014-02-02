@@ -403,6 +403,7 @@ class TreeEditor(admin.ModelAdmin):
         return ['<div class="drag_handle"></div>',]
 
     def actions_column(self, instance):
-        return u' '.join(self._actions_column(instance))
+        return u' '.join(reversed(self._actions_column(instance)))
+    
     actions_column.allow_tags = True
     actions_column.short_description = _(u'Действия')

@@ -1,6 +1,29 @@
 {% extends "admin/change_list.html" %}
 {% load  admin_list i18n %}
 
+{% block filters %}
+	<div id="grp-filters" class="g-d-6 g-d-l">
+	    <div class="grp-pulldown-container">
+	        <a href="javascript://" class="grp-button grp-pulldown-handler">
+	            {% trans 'Filter' %}
+	        </a>
+	        <ul class="grp-pulldown-content" style="display: none; position: absolute">
+				<div class="grp-module">
+					<div class="grp-row">
+						<a id="open_entire_tree" href="#" onclick="return false;">{% trans 'Раскрыть все' %}</a>
+						<a id="collapse_entire_tree" href="#" onclick="return false;" style="float: right;">{% trans 'Свернуть все' %}</a>
+					</div>
+				</div>
+
+	            {% for spec in cl.filter_specs %}
+	                {% admin_list_filter cl spec %}
+	            {% endfor %}
+	        </ul>
+	    </div>
+	</div>
+{% endblock %}
+
+
 {% block extrahead %}
 {{ block.super }}
 <link rel="stylesheet" type="text/css" href="{{ FEINCMS_ADMIN_MEDIA }}style.css" />
@@ -29,28 +52,4 @@
 	<script type="text/javascript" src="{{ FEINCMS_ADMIN_MEDIA }}toolbox.js"></script>
 	<script type="text/javascript" src="{{ FEINCMS_ADMIN_MEDIA }}fein_tree.js"></script>
 
-{% endblock %}
-
-{% block object-tools-items %}
-    {% if not is_popup and recoverlist_url %}
-        <li style="list-style: none;"><a href="{{recoverlist_url}}" class="recoverlink btn btn-mini pull-right" style="margin-right: 10px;">Восстановить</a></li>
-    {% endif %}
-    {{block.super}}
-{% endblock %}
-
-{% block filters %}
-	{% if cl.has_filters %}
-		<div id="changelist-filter">
-			<div class="gap-10"></div>
-			<ul>
-				<li style="margin-bottom: 5px;"><a id="open_entire_tree" href="#" onclick="return false;" class="btn"><i class="icon-plus"></i> {% trans 'Раскрыть все' %}</a></li>
-				<li><a id="collapse_entire_tree" href="#" onclick="return false;" class="btn"><i class="icon-minus"></i> {% trans 'Свернуть все' %}</a></li>
-			</ul>
-
-			<h2>{% trans 'Filter' %}</h2>
-			{% for spec in cl.filter_specs %}
-				{% admin_list_filter cl spec %}
-			{% endfor %}
-		</div>
-	{% endif %}
 {% endblock %}
