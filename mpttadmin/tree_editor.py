@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import simplejson
 
 from django.conf import settings as django_settings
 from django.contrib import admin
@@ -6,7 +7,6 @@ from django.contrib.admin.views import main
 from django.db.models import Q
 from django.db.models.query import QuerySet
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseForbidden, HttpResponseNotFound, HttpResponseServerError
-from django.utils import simplejson
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _, ugettext
 
@@ -132,8 +132,8 @@ class ChangeList(main.ChangeList):
         self.user = request.user
         super(ChangeList, self).__init__(request, *args, **kwargs)
 
-    def get_query_set(self, *args, **kwargs):
-        return super(ChangeList, self).get_query_set(*args, **kwargs).order_by('tree_id', 'lft')
+    def get_queryset(self, *args, **kwargs):
+        return super(ChangeList, self).get_queryset(*args, **kwargs).order_by('tree_id', 'lft')
 
     def get_results(self, request):
         if settings.FEINCMS_TREE_EDITOR_INCLUDE_ANCESTORS:
